@@ -1,6 +1,8 @@
 <?php
 
 // Note: some of the codes here where commented since i still need to solved issues pertaining to its database functionality
+// To be Removed: chunking code
+
 
 namespace AkapCsvProcessor;
 
@@ -36,8 +38,6 @@ class CsvProcessor
         $header = fgetcsv($inputFile);
         $header = $this->normalizeHeader($header);
 
-        // Define the desired output header
-        // $outputHeader = ['no','firstname', 'middlename', 'lastname', 'extensionname', 'birth_date', 'birth_year', 'birth_month', 'birth_day', 'sex', 'province'];
         $outputHeader = ['firstname', 'middlename', 'lastname', 'extensionname', 'birth_date', 'birth_year', 'birth_month', 'birth_day', 'sex', 'province'];
 
         // Remember this: Add UTF-8 BOM for correct character rendering
@@ -56,60 +56,31 @@ class CsvProcessor
             $cleanedRow = Cleanse::cleanRow($row);
 
             if ($cleanedRow) {
-                $sanitizeddate = explode("/", $cleanedRow['birth_date']);
+                $sanitizeddate = Helpers::explodeDate($cleanedRow['birth_date']);
 
                 $birthYear = $sanitizeddate[2];
                 $birthMonth = $sanitizeddate[0];
                 $birthDay = $sanitizeddate[1];
-                // $birthYear = $cleanedRow['birth_date'] ? $cleanedRow['birth_date']->format('Y') : null;$sanitizeddate[2]
-                // $birthMonth = $cleanedRow['birth_date'] ? $cleanedRow['birth_date']->format('m') : null;
-                // $birthDay = $cleanedRow['birth_date'] ? $cleanedRow['birth_date']->format('d') : null;
-                $cleanedRow['birth_year'] = $birthYear;
+
+                $cleanedRow['birth_year'] = Helpers::yearChecker($birthYear);
                 $cleanedRow['birth_month'] = $birthMonth;
                 $cleanedRow['birth_day'] = $birthDay;
-                $cleanedRow['birth_date'] = $birthMonth.'/'.$birthDay.'/'.$birthYear;
-                // $cleanedRow['birth_date'] = $cleanedRow['birth_date'] ? $cleanedRow['birth_date']->format('Y-m-d') : null;
-                // $cleanedRow['birth_date'] = strtotime($cleanedRow['birth_date']);
-                // $timestamp = strtotime($cleanedRow['birth_date']); // Convert to timestamp
+                $cleanedRow['birth_date'] = Helpers::concatDate([$birthMonth,$birthDay,$birthYear]);
 
-                // if ($timestamp !== false) {
-                //     $date = new \DateTime("@$timestamp"); // Convert timestamp to DateTime
-
-                //     $cleanedRow['birth_date'] = $date->format('Y-m-d'); // Output: 2025-03-05
-                // }
 
                 // Create a new array with only the desired fields
-                // $outputRow = ['no' => $outputRowNumber]; // Add row number
                 $outputRow = []; // Add row number
                 foreach ($outputHeader as $field) {
                     $outputRow[$field] = $cleanedRow[$field] ?? null; // Use null if field is missing
-                    // echo $outputRow[$field].'-';
                 }
 
                 fputcsv($outputFile, $outputRow);
-                $chunk[] = $cleanedRow;
-
-                if (count($chunk) >= $this->chunkSize) {
-                    // $this->processChunk($chunk, $originalId - count($chunk) + 1);
-                    $chunk = [];
-                }
 
                 $outputRowNumber++; // Increment row number
             }
         }
 
-        // if (!empty($chunk)) {
-        //     $this->processChunk($chunk, $originalId - count($chunk) + 1);
-        // }
-
         fclose($inputFile);
         fclose($outputFile);
     }
-
-    // private function processChunk(array $chunk, $startingOriginalId)
-    // {
-    //     foreach ($chunk as $index => $row) {
-    //         $this->database->insertData($row, $startingOriginalId + $index);
-    //     }
-    // }
 }
