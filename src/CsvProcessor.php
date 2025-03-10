@@ -3,7 +3,8 @@
 /**
  * Class Cleanse
  *
- * This class is responsible for processing the excel files that are UTF-8 CSV data
+ * This class is responsible for processing the excel files that are 
+ * UTF-8 CSV data.
  */
 
 namespace AkapCsvProcessor;
