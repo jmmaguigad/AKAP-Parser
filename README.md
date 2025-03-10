@@ -4,12 +4,9 @@ A lightweight **CSV cleansing and processing tool** written in PHP. This tool **
 
 ## :rocket: Features
 :heavy_check_mark: Cleans CSV data by removing unnecessary characters  
-:heavy_check_mark: Standardizes **names, birthdates, and other fields**  
-:heavy_check_mark: Deduplicates records based on predefined logic  
-:heavy_check_mark: Converts **month names to numeric format**  
-:heavy_check_mark: Ensures valid **date and year formatting**  
+:heavy_check_mark: Standardizes **names, birthdates, and other fields** 
 :heavy_check_mark: Generates a **clean CSV output** for download  
-:heavy_check_mark: Works with **large CSV files** without timeout issues  
+:heavy_check_mark: Works with **large CSV files** seamlessly  
 
 ---
 
