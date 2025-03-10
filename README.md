@@ -27,7 +27,6 @@ composer install
 :heavy_check_mark: Create the necessary folders that are not available after cloning the git repository
 
 AKAP-Parser/
-
     │── data/            # Folder for input CSV files
     │── output/          # Folder for output CSV files
     │── src/             # Core PHP classes
