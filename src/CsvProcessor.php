@@ -1,33 +1,56 @@
 <?php
 
-// Note: some of the codes here where commented since i still need to solved issues pertaining to its database functionality
-// To be Removed: chunking code
-
+/**
+ * Class Cleanse
+ *
+ * This class is responsible for processing the excel files that are UTF-8 CSV data
+ */
 
 namespace AkapCsvProcessor;
 
 class CsvProcessor
 {
+    /**
+     * @var string $inputFilePath Path to the input CSV file.
+     * @var string $outputFilePath Path to the output CSV file.
+     */
     private $inputFilePath;
     private $outputFilePath;
-    private $database;
-    private $chunkSize;
 
-    public function __construct($inputFilePath, $outputFilePath, Database $database, $chunkSize = 1000)
+    /**
+     * Constructor method to initialize file paths.
+     *
+     * @param string $inputFilePath  Path of the input CSV file.
+     * @param string $outputFilePath Path of the output CSV file.
+     */
+    public function __construct($inputFilePath, $outputFilePath)
     {
         $this->inputFilePath = $inputFilePath;
         $this->outputFilePath = $outputFilePath;
-        // $this->database = $database;
-        $this->chunkSize = $chunkSize;
     }
 
+    /**
+     * Normalizes CSV headers by converting all column names to lowercase.
+     *
+     * @param array $header The original header row from the CSV file.
+     * @return array The normalized header row with all lowercase column names.
+     */
     private function normalizeHeader(array $header): array
     {
         return array_map('strtolower', $header);
     }
 
+    /**
+     * Processes the input CSV file by:
+     * - Reading the input file.
+     * - Cleaning and formatting data.
+     * - Writing the processed data to the output file.
+     *
+     * @return void
+     */
     public function process()
     {
+        // Open input and output CSV files for reading and writing
         $inputFile = fopen($this->inputFilePath, 'r');
         $outputFile = fopen($this->outputFilePath, 'w');
 
@@ -38,48 +61,48 @@ class CsvProcessor
         $header = fgetcsv($inputFile);
         $header = $this->normalizeHeader($header);
 
+        // Define the output file headers
         $outputHeader = ['firstname', 'middlename', 'lastname', 'extensionname', 'birth_date', 'birth_year', 'birth_month', 'birth_day', 'sex', 'province'];
 
-        // Remember this: Add UTF-8 BOM for correct character rendering
+        // Remember: Add UTF-8 BOM to the output file to ensure correct character rendering
+        // (This helps prevent encoding issues when opening the file in Excel)
         fwrite($outputFile, "\xEF\xBB\xBF");
 
         fputcsv($outputFile, $outputHeader);
 
-        $originalId = 0;
-        $outputRowNumber = 1; //Initialize output row number
-        $chunk = [];
-
         while (($row = fgetcsv($inputFile)) !== false) {
-            $originalId++;
             $row = array_combine(array_slice($header, 0, count($row)), $row);
 
             $cleanedRow = Cleanse::cleanRow($row);
 
             if ($cleanedRow) {
-                $sanitizeddate = Helpers::explodeDate($cleanedRow['birth_date']);
+                // Extract birth date components (year, month, day)
+                $extractedbdatecomponents = Helpers::explodeDate($cleanedRow['birth_date']);
 
-                $birthYear = $sanitizeddate[2];
-                $birthMonth = $sanitizeddate[0];
-                $birthDay = $sanitizeddate[1];
+                $birthYear = $extractedbdatecomponents[2] ?? 'Invalid';
+                $birthMonth = $extractedbdatecomponents[0] ?? 'Invalid';
+                $birthDay = $extractedbdatecomponents[1] ?? 'Invalid';
 
-                $cleanedRow['birth_year'] = Helpers::yearChecker($birthYear);
+                // Validate and assign birth date components
+                $cleanedRow['birth_year'] = $birthYear;
                 $cleanedRow['birth_month'] = $birthMonth;
                 $cleanedRow['birth_day'] = $birthDay;
-                $cleanedRow['birth_date'] = Helpers::concatDate([$birthMonth,$birthDay,$birthYear]);
+
+                // Reconstruct the birth date in a standardized format
+                $cleanedRow['birth_date'] = Helpers::concatDate([$birthMonth, $birthDay, $birthYear]);
 
 
                 // Create a new array with only the desired fields
-                $outputRow = []; // Add row number
+                $outputRow = [];
                 foreach ($outputHeader as $field) {
                     $outputRow[$field] = $cleanedRow[$field] ?? null; // Use null if field is missing
                 }
 
                 fputcsv($outputFile, $outputRow);
-
-                $outputRowNumber++; // Increment row number
             }
         }
 
+        // Close the files
         fclose($inputFile);
         fclose($outputFile);
     }

@@ -27,10 +27,3 @@
 </body>
 
 </html>
-
-<?php
-// $elements = ['test','test'];
-// foreach ($elements as $e) {
-//     echo $e;
-// }
-?>
