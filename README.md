@@ -14,16 +14,15 @@ A lightweight **CSV cleansing and processing tool** written in PHP. This tool **
 ---
 
 ## :pushpin: **Installation**
-### **1.1 Clone the repository**
+### **1 Clone the repository and install composer**
 ```    
-    git clone https://github.com/yourusername/AkapCsvProcessor.git
+git clone https://github.com/jmmaguigad/AKAP-Parser.git
 ```
 ```
-    cd AkapCsvProcessor
+cd AKAP-Parser
 ```
-### **1.2 Install necessary composer**
 ```
-    composer install
+composer install
 ```
 ---
 
@@ -41,7 +40,7 @@ AkapCsvProcessor/
 
 ---
 
-## :pencil: Usage
+## :pushpin: Usage
 
 ### **:one: Upload a CSV File**
 - Access the application via **`http://application_url/`**  
@@ -71,5 +70,5 @@ AkapCsvProcessor/
 
 ---
 
-## :ok_hand: Contributing
+## :pushpin: Contributing
 Feel free to **fork this repo** and submit **pull requests**. Open an issue if you encounter any bugs! 🚀
