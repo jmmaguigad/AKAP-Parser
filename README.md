@@ -2,7 +2,7 @@
 
 A lightweight **CSV cleansing and processing tool** written in PHP. This tool **cleans, normalizes, and exports** CSV data with proper formatting, ensuring accurate and structured output.
 
-## 🚀 Features
+## :rocket: Features
 ✔️ Cleans CSV data by removing unnecessary characters  
 ✔️ Standardizes **names, birthdates, and other fields**  
 ✔️ Deduplicates records based on predefined logic  
