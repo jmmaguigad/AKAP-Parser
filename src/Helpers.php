@@ -3,7 +3,8 @@
 /**
  * Class Helpers
  *
- * This class is responsible for handling the common helper functions used in the project
+ * This class is responsible for handling the common helper 
+ * functions used in the project.
  */
 
 namespace AkapCsvProcessor;
