@@ -1,6 +1,6 @@
-# :page_facing_up: AkapCsvProcessor
+# :page_facing_up: AKAP-Parser
 
-A lightweight **CSV cleansing and processing tool** written in PHP. This tool **cleans, normalizes, and exports** CSV data with proper formatting, ensuring accurate and structured output.
+A lightweight **CSV cleansing and processing tool** written in PHP. This tool **cleans, normalizes, and exports** CSV data with proper formatting needed in processing the AKAP data.
 
 ## :rocket: Features
 :heavy_check_mark: Cleans CSV data by removing unnecessary characters  
