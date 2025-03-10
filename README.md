@@ -48,7 +48,7 @@ AkapCsvProcessor/
 
 | FIRST NAME | MIDDLE NAME | LAST NAME | EXTENSION NAME | BIRTHDATE (MM/DD/YYYY) | SEX | PROVINCE |
 |------------|-------------|-----------|----------------|------------------------|-----|----------|
-| John       | A.          | Doe       | Jr.            | 01/15/1990             | M   | CAGAYAN    |
+| John       | A.          | Doe       | Jr.            | 01/15/1990             | M   | CAGAYAN  |
 
 ---
 
@@ -64,7 +64,7 @@ AkapCsvProcessor/
 - The cleaned CSV will be automatically downloaded after processing.  
 - The output format follows:
 
-| Firstname | Middlename | Lastname | Extensionname | Birth Date | Birth Year | Birth Month | Birth Day | Sex | Province |
+| firstname | middlename | lastname | extensionname | birth_date | birth_year | birth_month | birth_day | sex | province |
 |-----------|------------|----------|---------------|------------|------------|-------------|-----------|-----|----------|
 | JOHN      | A          | DOE      | JR            | 01/15/1990 | 1990       | 01          | 15        | M   | CAGAYAN  |
 
