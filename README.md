@@ -22,13 +22,19 @@ cd AkapCsvProcessor
 ---
 
 ## 📌 **2 Project Structure**
+✔️ Create the necessary folders that are not available after cloning the git repository
+
+
 AkapCsvProcessor/
-│── data/            # Folder for input CSV files
-│── output/          # Folder for output CSV files
-│── src/             # Core PHP classes
-│── index.php        # Main entry point for file upload & processing
-│── README.md        # Project documentation
-│── composer.json    # Declaration of autoloading
+
+    │── data/            # Folder for input CSV files
+    │── output/          # Folder for output CSV files
+    │── src/             # Core PHP classes
+    │── index.php        # Main entry point for file upload & processing
+    │── README.md        # Project documentation
+    │── composer.json    # Declaration of autoloading
 
 
+
+## 📌 **3 Instalation**
 
